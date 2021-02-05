@@ -1,6 +1,7 @@
 package com.lambdaschool.shoppingcart.services;
 
 import com.lambdaschool.shoppingcart.models.User;
+import org.springframework.security.core.context.SecurityContext;
 
 import java.util.List;
 
@@ -80,3 +81,4 @@ public interface UserService
      */
     public void deleteAll();
 }
+

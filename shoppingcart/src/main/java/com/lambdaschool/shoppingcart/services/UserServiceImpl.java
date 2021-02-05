@@ -33,11 +33,20 @@ public class UserServiceImpl
     @Autowired
     private RoleService roleService;
 
-    public User findUserById(long id) throws
-                                      ResourceNotFoundException
+    @Autowired
+    private HelperFunctions helperFunctions;
+
+    public User findUserById(long id) throws ResourceNotFoundException
     {
-        return userrepos.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("User id " + id + " not found!"));
+        User currentUser = userrepos.findById(id).orElseThrow(()-> new ResourceNotFoundException("User id " + id + " not found"));
+        if (helperFunctions.isAuthorizedToMakeChange(currentUser.getUsername()))
+        {
+            return currentUser;
+        }
+        else
+        {
+            throw new ResourceNotFoundException("This user is not authorized to make changes");
+        }
     }
 
     @Override
